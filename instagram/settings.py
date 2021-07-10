@@ -85,6 +85,7 @@ DATABASES = {
         'NAME': 'instagram',
         'USER': 'ibrahim',
         'PASSWORD': 'instagram',
+        'HOST': 'localhost'
        
     }
 }
