@@ -5,7 +5,8 @@ from . import views
 
 
 urlpatterns=[
-    url(r'',views.home,name='home'),
+    url('',views.home,name='home'),
+    
 
 ]
 if settings.DEBUG:
