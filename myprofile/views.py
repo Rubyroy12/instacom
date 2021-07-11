@@ -1,23 +1,22 @@
 from django.shortcuts import render,redirect
-# from .forms import NewProfile
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Image,Profile,Follow,
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
+
+@login_required(login_url='/accounts/login/')
+def index(request):
+    images = Image.images()
+    users = User.objects.exclude(id=request.user.id)
+    return render(request,'index.html', {"images":images[::1],"users":users})
+
+
 def update_profile(request):
    
-    # current_user = request.user
-    # if request.method == 'POST':
-    #     form =NewProfile(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         article = form.save(commit=False)
-    #         article.editor = current_user
-    #         article.save()
-    #     return redirect('home')
-
-    # else:
-    #     form =NewProfile()
+   
     return render(request, 'newprofile.html')
 
 def profile(request):
