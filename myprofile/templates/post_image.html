@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+{% load static %}
+<div class="container mt-4">
+    <div class="col-12" >
+        <div class="container" style="position: fixed; width: 500px; margin-top: 100px;">
+
+            <form action="" method="POST" enctype="multipart/form-data" novalidate>
+                {%csrf_token%}
+                
+                {% bootstrap_form form layout='inline' %}
+                <button type=submit class="btn btn-sm btn-success" value="Upload">Upload</button>
+            </form>
+    
+        </div>
+    </div>
+</div>
+
+{% endblock %}

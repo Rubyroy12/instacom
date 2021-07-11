@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+{% load static %}
+<div class="container mt-4">
+    <div class="card ">
+        <div class="card-title">
+        </div>
+        <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data"  novalidate>
+                {% csrf_token%}
+                {% bootstrap_form form layout='inline' %}
+                <button type="submit" class="btn btn-primary btn-sm D-block mx-auto">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

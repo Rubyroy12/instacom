@@ -1,0 +1,63 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles %}
+
+{% bootstrap_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+{% endblock %}
+{% block content %}
+{{ block.super }}
+
+<div class="container" style="margin-top:7%;">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 ml-3">
+                <img src="{{ image.image.url }}" class="card-img" width="100%">
+            </div>
+            <div class="col-md-3 mt-2">
+                <img src="{{image.user.photo.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
+                    alt="{{image.user.user.username}}" width="35" height="35">
+                <a href="{% url 'profile' image.user.user.username %}"
+                    class="mt-4 user">{{image.user.user.username | title}}</a>
+
+                <hr style="width:96%">
+                <img src="{{image.user.photo.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
+                    alt="{{image.user.user.username}}" width="35" height="35">
+                <a href="{% url 'profile' image.user.user.username %}"
+                    class="mt-4 user">{{image.user.user.username | title}}</a>
+                <p>{{ image.caption }}</p>
+
+                <hr style="width:96%">
+
+                {% for comment in comments %}
+                <div>
+                    <div class="ml-2"><strong>{{ comment.user.user.username }}</strong> <span
+                            class="text-secondary">{{ comment.comment }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="ml-3">No comments here yet</p>
+                {% endfor %}
+                <hr style="width:96%; margin-top:84%;">
+                <form class="form" action="" method="post" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-10">
+                            {% bootstrap_form form layout='inline' %}
+                        </div>
+                        <div class="col-md-2 mt-4">
+                            <button type="submit" class="btn btn-sm btn-outline-primary"
+                                style="margin-top:14px; margin-left:-10px">post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

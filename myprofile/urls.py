@@ -1,13 +1,17 @@
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
 
 urlpatterns=[
-    url('',views.home,name='home'),
-    url('^profile/$',views.update_profile,name='newprofile'),
-    url('^accounts/profile',views.profile, name='profile'),
+    url('',views.index,name='index'),
+    url('account/', include('django.contrib.auth.urls')),
+    url('account/', include('django.contrib.auth.urls')),
+    url('profile/<str:username>/',views.profile,name='profile'),
+    url('edit/profile/',views.update_profile,name='update'),
+    url('image/',views.post,name='post'),
+    # url('^accounts/profile',views.profile, name='profile'),
     
 
 ]

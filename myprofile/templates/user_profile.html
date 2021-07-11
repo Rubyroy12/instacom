@@ -1,0 +1,65 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles %}
+
+{% bootstrap_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<div class="container">
+    <div style="display: flexbox; margin-left: auto;margin-right: auto; border-radius: 50%; position: relative;
+                    width: 200px;
+                    height: 200px;
+                    overflow: hidden; float: left;">
+
+        <img style="width: 100%; height: auto;" src="{{ user_prof.profile.photo.url }}">
+    </div>
+</div>
+<div class="row" style="padding-bottom: 100px;">
+    <div class="col-md-12 mt-3">
+        <div class="conatiner">
+            <div class="media-body">
+                <div class="account-heading">
+                    <span class="mr-3 username" style="font-size: 25px;">{{ user_prof.username }}</span>
+                    {% if follow_status %}
+                    <a class="btn btn-sm btn-outline-danger ml-5"
+                        href="{% url 'unfollow' user_prof.profile.id %}">Unfollow</a>
+
+                    {%else%}
+
+                    <a class="btn btn-sm btn-primary ml-5" href="{% url 'follow' user_prof.profile.id %}">Follow</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-details mt-3 mb-3">
+                <span class="mr-5"><strong>{{user_posts.count}}</strong> Posts</span>
+                <span class="mr-5"> <strong>{{ user_prof.profile.followers.count }}</strong> followers</span>
+                <span class="mr-5"> <strong>{{ user_prof.profile.following.count }}</strong> following</span>
+            </div>
+            <h5>{{ user_prof.profile.name }}</h5>
+            <p class="text-secondary">{{ user_prof.profile.bio }}</p>
+        </div>
+    </div>
+</div>
+<div class="container" style=" border-top: solid rgba(182, 176, 176, 0.74) 1px;">
+    {% if user_posts %}
+    {% for image in user_posts %}
+    <div class="card" style="width: 40rem; margin-top: 50px;">
+        <div class="card-body">
+            <img src="{{ image.image.url }}" alt="{{image.caption}}" class="card-img">
+            <p class="card-text">{{ image.caption }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <h4 style="text-align: center;">No posts yet</h4>
+    {% endif %}
+</div>
+{%endblock%}
