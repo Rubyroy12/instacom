@@ -1,5 +1,7 @@
 asgiref==3.4.0
 beautifulsoup4==4.9.3
+certifi==2021.5.30
+cloudinary==1.26.0
 config==0.3.9
 confusable-homoglyphs==3.2.0
 dj-database-url==0.5.0
@@ -15,4 +17,5 @@ pytz==2021.1
 six==1.16.0
 soupsieve==2.2.1
 sqlparse==0.4.1
+urllib3==1.26.6
 whitenoise==5.2.0

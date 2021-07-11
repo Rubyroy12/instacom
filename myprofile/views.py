@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import NewProfile
+# from .forms import NewProfile
 
 # Create your views here.
 def home(request):
@@ -7,18 +7,18 @@ def home(request):
 
 def update_profile(request):
    
-    current_user = request.user
-    if request.method == 'POST':
-        form =NewProfile(request.POST, request.FILES)
-        if form.is_valid():
-            article = form.save(commit=False)
-            article.editor = current_user
-            article.save()
-        return redirect('home')
+    # current_user = request.user
+    # if request.method == 'POST':
+    #     form =NewProfile(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         article = form.save(commit=False)
+    #         article.editor = current_user
+    #         article.save()
+    #     return redirect('home')
 
-    else:
-        form =NewProfile()
-    return render(request, 'newprofile.html', {"form": form})
+    # else:
+    #     form =NewProfile()
+    return render(request, 'newprofile.html')
 
 def profile(request):
     return render(request,'profile.html')
