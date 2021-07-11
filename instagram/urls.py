@@ -22,5 +22,6 @@ urlpatterns = [
     url('',include('myprofile.urls')),
     url('^accounts/', include('registration.backends.simple.urls')),
     url('^logout/$', views.logout, {"next_page": '/'}),
+    
  
 ]

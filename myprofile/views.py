@@ -17,3 +17,6 @@ def update_profile(request):
     # else:
     #     form = NewProfile()
     return render(request,'newprofile.html')
+
+def profile(request):
+    return render(request,'profile.html')
