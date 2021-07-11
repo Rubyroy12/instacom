@@ -5,7 +5,7 @@ from cloudinary.models import CloudinaryField
 
 class profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    biography = models.TextField(blank=True)
+    bio = models.TextField(blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -20,7 +20,19 @@ class Comments(models.Model):
     comments = models.TextField()
 
 class UpdateProfile(models.Model):
-    editor= models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     bio=models.TextField()
+    tags = models.ManyToManyField(tags,blank=True)
     modified=models.DateTimeField(auto_now_add=True)
     profile_pic= CloudinaryField('image')
+
+    @classmethod
+    def search_by_title(cls,search_term):
+        news = cls.objects.filter(title__icontains=search_term)
+        return news
+
+class tags(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self): #will return the string rep of our models 
+        return self.name

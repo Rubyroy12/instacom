@@ -4,5 +4,7 @@ from .models import UpdateProfile
 class NewProfile(forms.ModelForm):
     class Meta:
         model = UpdateProfile
-        exclude = ['editor']
-
+        exclude = ['editor', 'modified']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }

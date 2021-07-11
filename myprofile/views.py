@@ -7,16 +7,18 @@ def home(request):
 
 def update_profile(request):
    
-   
-    #     form = NewProfile(request.POST,request.FILES)
-    #     if form.is_valid():
-    #         profile = form.save()
-    #         profile.editor=current_user
-    #         profile.save()
-    #     return redirect('home')
-    # else:
-    #     form = NewProfile()
-    return render(request,'newprofile.html')
+    current_user = request.user
+    if request.method == 'POST':
+        form =NewProfile(request.POST, request.FILES)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.editor = current_user
+            article.save()
+        return redirect('home')
+
+    else:
+        form =NewProfile()
+    return render(request, 'newprofile.html', {"form": form})
 
 def profile(request):
     return render(request,'profile.html')
