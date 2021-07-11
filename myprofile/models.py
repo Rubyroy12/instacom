@@ -19,12 +19,13 @@ class profile(models.Model):
         """Return username"""
         return self.user.username
 
-from tinymce.models import HTMLField
+
 class Comments(models.Model):
     commentor = models.ForeignKey(User, on_delete=models.CASCADE)
-    comments = HTMLField()
+    comments = models.TextField()
 
 class UpdateProfile(models.Model):
-    bio=HTMLField()
+    editor= models.ForeignKey(User, on_delete=models.CASCADE)
+    bio=models.TextField()
     modified=models.DateTimeField(auto_now_add=True)
     profile_pic= CloudinaryField('image')
