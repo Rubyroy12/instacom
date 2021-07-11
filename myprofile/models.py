@@ -9,7 +9,7 @@ class profile(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     
 
-    picture = CloudinaryField('image')
+    
 
     # time
     created = models.DateTimeField(auto_now_add=True)
@@ -19,7 +19,12 @@ class profile(models.Model):
         """Return username"""
         return self.user.username
 
-
+from tinymce.models import HTMLField
 class Comments(models.Model):
-    Comments = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    commentor = models.ForeignKey(User, on_delete=models.CASCADE)
+    comments = HTMLField()
+
+class UpdateProfile(models.Model):
+    bio=HTMLField()
+    modified=models.DateTimeField(auto_now_add=True)
+    profile_pic= CloudinaryField('image')
