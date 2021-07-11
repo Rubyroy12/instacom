@@ -11,7 +11,6 @@ urlpatterns=[
     url('profile/<str:username>/',views.profile,name='profile'),
     url('edit/profile/',views.update_profile,name='update'),
     url('image/',views.post,name='post'),
-    # url('^accounts/profile',views.profile, name='profile'),
     
 
 ]
