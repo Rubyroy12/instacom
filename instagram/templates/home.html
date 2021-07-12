@@ -22,7 +22,7 @@
 
         <div class="col-6" style="overflow-x: hidden;">
             {% for image in images %}
-            <div class="card" style="width: 40rem; margin-top: 20px;">
+            <div class="card" style="margin-top: 20px;">
                 <div class="card-title">
                     <img src="{{image.user.photo.url}}" class="rounded-circle" alt="" width="35" height="35">
                     <a href="{% url 'profile' image.user.user.username  %}"
