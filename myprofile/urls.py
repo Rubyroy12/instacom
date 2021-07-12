@@ -5,7 +5,7 @@ from . import views
 
 
 urlpatterns=[
-    url('',views.index,name='index'),
+    url('^$',views.index,name = 'index'),
     url('account/', include('django.contrib.auth.urls')),
     url('account/', include('django.contrib.auth.urls')),
     url('profile/<str:username>/',views.profile,name='profile'),
@@ -13,9 +13,9 @@ urlpatterns=[
     url('image/',views.post,name='post'),
     url('search/', views.search_profile, name='search'),
     url('user_profile/<username>/', views.user_profile, name='user_profile'),
-    # url('unfollow/<to_unfollow>', views.unfollow, name='unfollow'),
-    # url('follow/<to_follow>', views.follow, name='follow'),
-    # url('image/<id>', views.comment, name='comment'),
+    url('unfollow/<to_unfollow>', views.unfollow, name='unfollow'),
+    url('follow/<to_follow>', views.follow, name='follow'),
+    url('image/<id>', views.comment, name='comment'),
     
 
 ]

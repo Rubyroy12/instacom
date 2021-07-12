@@ -1,3 +1,5 @@
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,7 +10,7 @@ from .forms import UploadForm,ProfileForm,UpdateUserForm,UpdateUserProfileForm,C
 #     return render(request, 'home.html')
 
 
-
+@login_required(login_url='/accounts/login/')
 def index(request):
     images = Image.images()
     users = User.objects.exclude(id=request.user.id)
@@ -29,6 +31,7 @@ def post(request):
 
 @login_required(login_url='/accounts/login/')
 def profile(request, username):
+    request.user = username
     images = request.user.profile.images.all()
     print(images)
     if request.method == 'POST':
@@ -37,7 +40,7 @@ def profile(request, username):
         if user_form.is_valid() and prof_form.is_valid():
             user_form.save()
             prof_form.save()
-            return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect(request.path_info,kwargs={"username": request.user})
     else:
         user_form = UpdateUserForm(instance=request.user)
         prof_form = UpdateUserProfileForm(instance=request.user.profile)
@@ -46,7 +49,7 @@ def profile(request, username):
         'prof_form': prof_form,
         'images': images,
     }
-    return render(request, 'profile.html', params)
+    return render(request, 'profile.html', params )
 
 @login_required(login_url='/accounts/login/')
 def update_profile(request):
@@ -56,7 +59,7 @@ def update_profile(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('profile')
+            return redirect(reverse('profile', kwargs={"username": request.user}))
     else:
         form = UploadForm()
     return render(request,'edit_profile.html',{"form":form})
@@ -98,3 +101,42 @@ def user_profile(request, username):
         'follow_status': follow_status
     }
     return render(request, 'user_profile.html', params)
+
+
+@login_required(login_url='/accounts/login/')
+def unfollow(request, to_unfollow):
+    if request.method == 'GET':
+        user_two_profile = Profile.objects.get(pk=to_unfollow)
+        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=user_two_profile)
+        unfollow_d.delete()
+        return redirect('user_profile', user_two_profile.user.username)
+
+
+@login_required(login_url='/accounts/login/')
+def follow(request, to_follow):
+    if request.method == 'GET':
+        user_three_profile = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile, followed=user_three_profile)
+        follow_s.save()
+        return redirect('user_profile', user_three_profile.user.username)
+
+@login_required(login_url='/accounts/login/')
+def comment(request, id):
+    image = get_object_or_404(Image, pk=id)
+    comments = image.comment.all()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.photo = image
+            comment.user = request.user.profile
+            comment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    params = {
+        'image': image,
+        'form': form,
+        'comments':comments,
+    }
+    return render(request, 'post.html', params)
