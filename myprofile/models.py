@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 
 class Image(models.Model):
+    
     user = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to = 'gallery/', null=True, blank=True)
     name = models.CharField(max_length=30)
