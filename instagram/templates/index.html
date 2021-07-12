@@ -9,21 +9,24 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
 {% endblock %}
 
 {% block content %}
 {{ block.super }}
 
-<div class="container" style="font-family: 'Forum', cursive;">
+<div class="container">
+
     <div class="row">
-        <div class="col-7">
+        <div class="col-md-3"></div>
+
+        <div class="col-6" style="overflow: scroll;">
             {% for image in images %}
-            <div class="card" style="width: 30rem; margin-top: 20px;">
+            <div class="card" style="width: 50rem; margin-top: 20px;">
                 <div class="card-title">
-                    <img src="{{image.user.photo.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
-                        alt="{{image.user.user.username}}" width="35" height="35">
-                    <a href="{% url 'profile' image.user.user.username  %}" class="mt-4 user" style="color: blue; font-weight: bold;">{{image.user.user.username|title}}</a>
+                    <img src="{{image.user.photo.url}}" class="rounded-circle" alt="" width="35" height="35">
+                    <a href="{% url 'profile' image.user.user.username  %}"
+                        style="color: rgb(139, 101, 18); font-weight: bold;">{{image.user.user.username|title}}</a>
                 </div>
                 <div class="card-body">
                     <a href="{% url 'comment' image.id %}"><img src="{{ image.image_url }}" class="card-img-top"
@@ -48,7 +51,6 @@
                         </button>
                         {% endif %}
                     </form>
-                    <!-- <span>{{ total_likes }} like{{ total_likes | pluralize}}</span> -->
                     <a href="{% url 'comment' image.id %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-chat" viewBox="0 0 16 16">
@@ -64,8 +66,10 @@
             </div>
             {% endfor %}
         </div>
-        <div class="col-4" style="margin-top: 20px;">
-            <h4 style="color:inherit">Suggestions for you</h4>
+
+
+        <div class="col-md-3">
+            <h4 class="text-secondary">Sugestions for you</h4>
             {% for user in users %}
             <div class="container">
                 <div class="row">
@@ -73,14 +77,18 @@
                         <img class="rounded-circle" src="{{ user.profile.photo.url }}" width="45px" height="45px">
                     </div>
                     <div class="col-md-6 mr-2 mt-2">
-                        <span><a style="color:blue" href="{% url 'user_profile' user.username  %}">{{ user.username }}</a></span>
+                        <span><a style="color:blue"
+                                href="{% url 'user_profile' user.username  %}">{{ user.username }}</a></span>
                     </div>
                     <div class="col-md-4">
                     </div>
                 </div>
             </div>
             {% endfor %}
+
         </div>
+
+
 
     </div>
 </div>
