@@ -17,33 +17,54 @@
     <div class="row">
         <div class="col-md-3">
         </div>
-        <div class="col-md-6" style="margin-top:10px">
+        <div class="col-md-7" style="margin-top:10px">
             <div class="media-body">
 
 
                 <img class="rounded-circle" style=" height: 165px; width: 165px;" src="{{ user.profile.photo.url }}"
                     alt="" style="float : left;">
 
-                <div class="details"style="float:right;">
-                <div class="profile d-flex justify-content-around">
-                    <h5 style="margin-right: 20px; margin-left: 20px;">{{ user.username}}</h5>
+                <div class="details" style="float:right;">
+                    <div class="profile d-flex justify-content-around">
+                        <h5 style="margin-right: 20px; margin-left: 20px;">{{ user.username}}</h5>
 
-                    <a class="btn btn-sm btn-outline-info mr-3" data-toggle="modal"
-                        data-target=".bd-example-modal-md"><strong>Edit
-                            Profile</strong></a>
+                        <a class="btn btn-sm btn-outline-info mr-3" data-toggle="modal"
+                            data-target=".bd-example-modal-md"><strong>Edit
+                                Profile</strong></a>
+                    </div>
+
+                    <div class="post-details mt-3 mb-3">
+                        <span class="mr-5"><strong>{{images.count}}</strong> Posts</span>
+                        <span class="mr-5"> <strong>{{ user.profile.followers.count }}</strong> followers</span>
+                        <span class="mr-5"> <strong>{{ user.profile.following.count }}</strong> following</span>
+                    </div>
+                    <p style="margin-left: 20px;">{{ user.profile.bio}}</p>
                 </div>
 
-                            <div class="post-details mt-3 mb-3">
-                                <span class="mr-5"><strong>{{images.count}}</strong> Posts</span>
-                                <span class="mr-5"> <strong>{{ user.profile.followers.count }}</strong> followers</span>
-                                <span class="mr-5"> <strong>{{ user.profile.following.count }}</strong> following</span>
-                            </div>
-                            <p style="margin-left: 20px;">{{ user.profile.bio}}</p>
-                </div>
 
-               
+            </div>
+
+
+
+            <hr>
+
+            <div class="gallery">
+                <h2 style="text-decoration: underline;">Photos</h2>
+                {% for image in images %}
+                <div class="media-body" >
+                    <div class="d-flex justify-content-none">
+                        <a href="{% url 'comment' image.id %}"><img src="{{ image.image.url }}" class="card-img-top"
+                                alt="..." style="width: 100%;"></a>
+                       
+
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
+
+
+
         <div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-md ">
@@ -61,27 +82,12 @@
 
 
 
+
     </div>
-
-
-
-
-
 </div>
-<hr>
 
-<div class="card">
-    {% for image in images %}
-    <div class="card" style="width: 30rem; margin-top: 50px;">
-        <div class="card-body">
-            <a href="{% url 'comment' image.id %}"><img src="{{ image.image.url }}" class="card-img-top" alt="..."
-                    style="width: 100%;"></a>
-            <p class="card-text">{{ image.caption }}</p>
 
-        </div>
-    </div>
-    {% endfor %}
-</div>
+
 
 
 {% endblock %}
