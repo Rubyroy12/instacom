@@ -20,9 +20,9 @@
     <div class="row">
         <div class="col-md-3"></div>
 
-        <div class="col-6" style="overflow: scroll;">
+        <div class="col-6" style="overflow-x: hidden;">
             {% for image in images %}
-            <div class="card" style="width: 50rem; margin-top: 20px;">
+            <div class="card" style="width: 40rem; margin-top: 20px;">
                 <div class="card-title">
                     <img src="{{image.user.photo.url}}" class="rounded-circle" alt="" width="35" height="35">
                     <a href="{% url 'profile' image.user.user.username  %}"
@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <a href="{% url 'comment' image.id %}"><img src="{{ image.image_url }}" class="card-img-top"
-                            alt="..." height="320px" style="width: 100%;"></a>
+                            alt="" height="320px" style="width: 100%;"></a>
                     <form action="{% url 'index' %}" method="post">
                         {% csrf_token %}
                         {% if is_liked %}
@@ -74,7 +74,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 mr-3 mt-1 mb-2">
-                        <img class="rounded-circle" src="{{ user.profile.photo.url }}" width="45px" height="45px">
+                        <img class="rounded-circle" src="{{ user.profile.photo.url }}" width="45px" height="45px" alt="">
                     </div>
                     <div class="col-md-6 mr-2 mt-2">
                         <span><a style="color:blue"
