@@ -3,7 +3,7 @@ import os
 from decouple import config,Csv
 import django_heroku
 import dj_database_url
-
+import cloudinary
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'instagram',
     'bootstrap4',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,10 @@ LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/' 
 
 django_heroku.settings(locals())
+
+# adding config
+cloudinary.config( 
+  cloud_name = "dpv25n1mx", 
+  api_key = "828966265885485", 
+  api_secret = "-9DtdpiedUWrxsRAaCISKXrmmfE" 
+)
