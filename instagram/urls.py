@@ -1,30 +1,20 @@
-"""instagram URL Configuration
+from django.conf.urls import url
+from django.urls import path, include
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path,include
-from django.contrib.auth import views
-from django_registration.backends.one_step.views import RegistrationView
-
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('myprofile.urls')),
-    path('accounts/register/', RegistrationView.as_view(success_url='/'),name='django_registration_register'),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('django_registration.backends.one_step.urls')),
-
-     
+urlpatterns=[
+    path('',views.index,name = 'index'),
+    path('account/', include('django.contrib.auth.urls')),
+    path('profile/<str:username>/',views.profile,name='profile'),
+    path('edit/profile/',views.update_profile,name='update'),
+    path('image/',views.post,name='post'),
+    path('search/', views.search_profile, name='search'),
+    path('user_profile/<username>/', views.user_profile, name='user_profile'),
+    path('unfollow/<to_unfollow>', views.unfollow, name='unfollow'),
+    path('follow/<to_follow>', views.follow, name='follow'),
+    path('image/<id>', views.comment, name='comment'),
 ]
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
