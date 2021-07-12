@@ -14,10 +14,10 @@ from .email import send_welcome_email
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
-def index(request):
+def home(request):
     images = Image.images()
     users = User.objects.exclude(id=request.user.id)
-    return render(request,'index.html', {"images":images[::1],"users":users})
+    return render(request,'home.html', {"images":images[::1],"users":users})
 
 def post(request):
     if request.method == 'POST':
