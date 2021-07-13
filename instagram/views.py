@@ -13,7 +13,7 @@ from .email import send_welcome_email
 
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+
 def home(request):
     images = Image.images()
     users = User.objects.exclude(id=request.user.id)
